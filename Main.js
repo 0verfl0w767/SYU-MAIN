@@ -16,44 +16,83 @@ export default class Main {
       </div>
       <div class="card card-2">
          <div class="service-tabs">
+            <span class="title">서비스</span>
             <ul class="links">
-               <li><a href="#" class="tab" data-target="subject">과목</a></li>
-               <li><a href="#" class="tab" data-target="course">수강</a></li>
-               <li><a href="#" class="tab" data-target="shuttle">버스</a></li>
+               <li><a href="#" class="service" data-target="subject">과목</a></li>
+               <li><a href="#" class="service" data-target="course">수강</a></li>
+               <li><a href="#" class="service" data-target="shuttle">버스</a></li>
             </ul>
          </div>
-         <div class="grid-container">
-            <div class="grid-item subject">
+         <div class="service-container">
+            <div class="service-item subject">
                <a href="#">시간표 마법사</a>
             </div>
-            <div class="grid-item subject">
+            <div class="service-item subject">
                <a href="#">교양 과목</a>
             </div>
-            <div class="grid-item subject">
+            <div class="service-item subject">
                <a href="#">일반 과목</a>
             </div>
-            <div class="grid-item course">
+            <div class="service-item course">
                <a href="#">모의 수강신청</a>
             </div>
-            <div class="grid-item course">
+            <div class="service-item course">
                <a href="#">경쟁률</a>
             </div>
-            <div class="grid-item course">
+            <div class="service-item course">
                <a href="#">폐강주의</a>
             </div>
-            <div class="grid-item shuttle">
+            <div class="service-item shuttle">
                <a href="#">실시간 위치 1</a>
             </div>
-            <div class="grid-item shuttle">
+            <div class="service-item shuttle">
                <a href="#">실시간 위치 2</a>
             </div>
-            <div class="grid-item shuttle">
+            <div class="service-item shuttle">
                <a href="#">도착시간</a>
             </div>
          </div>
       </div>
       <div class="card card-3">
-         <h3>...</h3>
+         <div class="service-tabs">
+            <span class="title">글</span>
+            <ul class="links">
+               <li><a href="#" class="board" data-target="school">학교</a></li>
+               <li><a href="#" class="board" data-target="news">기사</a></li>
+               <li><a href="#" class="board" data-target="newspaper">신문사</a></li>
+               <li><a href="#" class="board" data-target="...">...</a></li>
+            </ul>
+         </div>
+         <div class="board-container">
+            <div class="board-item">
+               <img src="//luxblock.co.kr/file_data/luxblook/2020/08/17/aacc2aa999a7ad8252af2dff4ac950d2.png" alt="뉴스1" class="board-image">
+               <div class="board-content">
+                  <h3>뉴스 제목 1</h3>
+                  <p>여기 뉴스 내용이 들어갑니다. 테스트 문장입니다.</p>
+               </div>
+            </div>
+            <div class="board-item">
+               <img src="//luxblock.co.kr/file_data/luxblook/2020/08/17/aacc2aa999a7ad8252af2dff4ac950d2.png" alt="뉴스2" class="board-image">
+               <div class="board-content">
+                  <h3>뉴스 제목 2</h3>
+                  <p>여기 뉴스 내용이 들어갑니다. 테스트 문장입니다.</p>
+               </div>
+            </div>
+            <div class="board-item">
+               <img src="//luxblock.co.kr/file_data/luxblook/2020/08/17/aacc2aa999a7ad8252af2dff4ac950d2.png" alt="뉴스3" class="board-image">
+               <div class="board-content">
+                  <h3>뉴스 제목 3</h3>
+                  <p>여기 뉴스 내용이 들어갑니다. 테스트 문장입니다.</p>
+               </div>
+            </div>
+            <div class="board-item">
+               <img src="//luxblock.co.kr/file_data/luxblook/2020/08/17/aacc2aa999a7ad8252af2dff4ac950d2.png" alt="뉴스4" class="board-image">
+               <div class="board-content">
+                  <h3>뉴스 제목 4</h3>
+                  <p>여기 뉴스 내용이 들어갑니다. 테스트 문장입니다.</p>
+               </div>
+            </div>
+         </div>
       </div>
       <div class="card card-4">
          <h3>공지사항</h3>
@@ -83,7 +122,6 @@ export default class Main {
             </table>
          </div>
       </div>
-
       <div id="notice" class="modal">
          <div class="modal-content">
             <span class="close">&times;</span>
@@ -113,33 +151,33 @@ export default class Main {
     this.element.appendChild(sectionContainer);
   }
 
-  addTabListener() {
-    const tabs = document.querySelectorAll('.tab');
+  addTabListener(title) {
+    const tabs = document.querySelectorAll(title);
     tabs.forEach(tab => {
       tab.addEventListener('click', (event) => {
         event.preventDefault();
         const target = tab.getAttribute('data-target');
-        this.activateTab(target);
+        this.activateTab(title, target);
       });
     });
   }
 
 
-  activateTab(target) {
-    const tabs = document.querySelectorAll('.tab');
-    const gridItems = document.querySelectorAll('.grid-item');
+  activateTab(title, target) {
+    const tabs = document.querySelectorAll(title);
+    const gridItems = document.querySelectorAll(`${title}-item`);
 
     tabs.forEach(tab => {
       tab.classList.remove('active');
     });
 
-    document.querySelector(`.tab[data-target="${target}"]`).classList.add('active');
+    document.querySelector(`${title}[data-target="${target}"]`).classList.add('active');
 
     gridItems.forEach(item => {
       item.classList.remove('show');
     });
 
-    const targetItems = document.querySelectorAll(`.grid-item.${target}`);
+    const targetItems = document.querySelectorAll(`${title}-item.${target}`);
     targetItems.forEach(item => item.classList.add('show'));
   }
   
@@ -163,7 +201,7 @@ export default class Main {
   
   openModal(title) {
     document.getElementById("modal-title").textContent = title;
-    document.getElementById("modal-content-text").textContent = "내용을 여기에 추가할 수 있습니다.";  // 동적 내용 추가
+    document.getElementById("modal-content-text").textContent = "테스트 문장입니다.";
 
     document.getElementById("notice").style.display = "block";
   }
@@ -174,8 +212,13 @@ export default class Main {
 
   appendTo(parent) {
     parent.appendChild(this.element);
-    this.addTabListener();
-    this.activateTab('subject');
+    
+    this.addTabListener('.service');
+    this.activateTab('.service', 'subject');
+    
+    this.addTabListener('.board');
+    this.activateTab('.board', 'school');
+    
     this.addNoticeListener();
   }
 }

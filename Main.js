@@ -12,50 +12,84 @@ export default class Main {
     section1.classList.add('section-1');
     section1.innerHTML = `
       <div class="card card-1">
-        <h3>...</h3>
+         <h3>...</h3>
       </div>
       <div class="card card-2">
-        <div class="service-tabs">
-          <ul class="links">
-            <li><a href="#" class="tab" data-target="subject">과목</a></li>
-            <li><a href="#" class="tab" data-target="course">수강</a></li>
-            <li><a href="#" class="tab" data-target="shuttle">버스</a></li>
-          </ul>
-        </div>
-        <div class="grid-container">
-          <div class="grid-item subject">
-            <a href="#">시간표 마법사</a>
-          </div>
-          <div class="grid-item subject">
-            <a href="#">교양 과목</a>
-          </div>
-          <div class="grid-item subject">
-            <a href="#">일반 과목</a>
-          </div>
-
-          <div class="grid-item course">
-            <a href="#">모의 수강신청</a>
-          </div>
-          <div class="grid-item course">
-            <a href="#">경쟁률</a>
-          </div>
-          <div class="grid-item course">
-            <a href="#">폐강주의</a>
-          </div>
-
-          <div class="grid-item shuttle">
-            <a href="#">실시간 위치 1</a>
-          </div>
-          <div class="grid-item shuttle">
-            <a href="#">실시간 위치 2</a>
-          </div>
-          <div class="grid-item shuttle">
-            <a href="#">도착시간</a>
-          </div>
-        </div>
+         <div class="service-tabs">
+            <ul class="links">
+               <li><a href="#" class="tab" data-target="subject">과목</a></li>
+               <li><a href="#" class="tab" data-target="course">수강</a></li>
+               <li><a href="#" class="tab" data-target="shuttle">버스</a></li>
+            </ul>
+         </div>
+         <div class="grid-container">
+            <div class="grid-item subject">
+               <a href="#">시간표 마법사</a>
+            </div>
+            <div class="grid-item subject">
+               <a href="#">교양 과목</a>
+            </div>
+            <div class="grid-item subject">
+               <a href="#">일반 과목</a>
+            </div>
+            <div class="grid-item course">
+               <a href="#">모의 수강신청</a>
+            </div>
+            <div class="grid-item course">
+               <a href="#">경쟁률</a>
+            </div>
+            <div class="grid-item course">
+               <a href="#">폐강주의</a>
+            </div>
+            <div class="grid-item shuttle">
+               <a href="#">실시간 위치 1</a>
+            </div>
+            <div class="grid-item shuttle">
+               <a href="#">실시간 위치 2</a>
+            </div>
+            <div class="grid-item shuttle">
+               <a href="#">도착시간</a>
+            </div>
+         </div>
       </div>
       <div class="card card-3">
-        <h3>...</h3>
+         <h3>...</h3>
+      </div>
+      <div class="card card-4">
+         <h3>공지사항</h3>
+         <div class="notice-table-container">
+            <table class="notice-table">
+               <tr>
+                  <td>공지사항 1</td>
+               </tr>
+               <tr>
+                  <td>공지사항 2</td>
+               </tr>
+               <tr>
+                  <td>공지사항 3</td>
+               </tr>
+               <tr>
+                  <td>공지사항 4</td>
+               </tr>
+               <tr>
+                  <td>공지사항 5</td>
+               </tr>
+               <tr>
+                  <td>공지사항 6</td>
+               </tr>
+               <tr>
+                  <td>공지사항 7</td>
+               </tr>
+            </table>
+         </div>
+      </div>
+
+      <div id="notice" class="modal">
+         <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="modal-title"></h2>
+            <p id="modal-content-text"></p>
+         </div>
       </div>
     `;
 
@@ -79,7 +113,7 @@ export default class Main {
     this.element.appendChild(sectionContainer);
   }
 
-  addTabClickListeners() {
+  addTabListener() {
     const tabs = document.querySelectorAll('.tab');
     tabs.forEach(tab => {
       tab.addEventListener('click', (event) => {
@@ -108,10 +142,40 @@ export default class Main {
     const targetItems = document.querySelectorAll(`.grid-item.${target}`);
     targetItems.forEach(item => item.classList.add('show'));
   }
+  
+  addNoticeListener() {
+    const noticeItems = this.element.querySelectorAll('.notice-table td');
+    noticeItems.forEach(item => {
+      item.addEventListener('click', () => {
+        const title = item.textContent.trim();
+        this.openModal(title);
+      });
+    });
+    
+    this.element.querySelector('.close').addEventListener('click', () => this.closeModal());
+    
+    window.onclick = (event) => {
+      if (event.target == document.getElementById("notice")) {
+        this.closeModal();
+      }
+    };
+  }
+  
+  openModal(title) {
+    document.getElementById("modal-title").textContent = title;
+    document.getElementById("modal-content-text").textContent = "내용을 여기에 추가할 수 있습니다.";  // 동적 내용 추가
+
+    document.getElementById("notice").style.display = "block";
+  }
+
+  closeModal() {
+    document.getElementById("notice").style.display = "none";
+  }
 
   appendTo(parent) {
     parent.appendChild(this.element);
-    this.addTabClickListeners();
+    this.addTabListener();
     this.activateTab('subject');
+    this.addNoticeListener();
   }
 }

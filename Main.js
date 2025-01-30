@@ -19,7 +19,7 @@ export default class Main {
     try {
       const response = await fetch("https://www.syu.kr/crawl2");
       const data = await response.json();
-      return data.result;
+      return data.result.slice(0, 6);
     } catch (error) {
       console.error(error);
       return [];
@@ -37,7 +37,7 @@ export default class Main {
       listItem.innerHTML = `
         <a href="${item.href}" class="board-link" target="_blank">
           <img
-            src="//luxblock.co.kr/file_data/luxblook/2020/08/17/4b0708ca352f2f903ed0ef0162bac4f2.png"
+            src="https://www.syu.ac.kr/wp-content/uploads/2020/01/%EC%9D%B4%EB%AF%B8%EC%A7%80-%EC%82%BC%EC%9C%A1%EB%8C%80%ED%95%99%EA%B5%90-%EB%A1%9C%EA%B3%A0-1.png"
             alt="${item.title}"
             class="board-image"
           />
@@ -63,7 +63,7 @@ export default class Main {
       listItem.innerHTML = `
         <a href="${item.href}" class="board-link" target="_blank">
           <img
-            src="//luxblock.co.kr/file_data/luxblook/2020/08/17/4b0708ca352f2f903ed0ef0162bac4f2.png"
+            src="${item.imgUrl}"
             alt="${item.title}"
             class="board-image"
           />
@@ -96,8 +96,12 @@ export default class Main {
           <ul class="links">
             <li><a href="#" class="service" data-target="subject">과목</a></li>
             <li><a href="#" class="service" data-target="course">수강</a></li>
-            <li><a href="#" class="service" data-target="shuttle">버스</a></li>
+            <li><a href="#" class="service" data-target="bus">버스</a></li>
+            <li><a href="#" class="service" data-target="etc">기타</a></li>
           </ul>
+        </div>
+        <div class="notice-section">
+          <p>...</p>
         </div>
         <div class="service-container">
           <div class="service-item subject">
@@ -118,14 +122,23 @@ export default class Main {
           <div class="service-item course">
             <a href="#">폐강주의</a>
           </div>
-          <div class="service-item shuttle">
+          <div class="service-item bus">
             <a href="#">실시간 위치 1</a>
           </div>
-          <div class="service-item shuttle">
+          <div class="service-item bus">
             <a href="#">실시간 위치 2</a>
           </div>
-          <div class="service-item shuttle">
+          <div class="service-item bus">
             <a href="#">도착시간</a>
+          </div>
+          <div class="service-item etc">
+            <a href="#">...</a>
+          </div>
+          <div class="service-item etc">
+            <a href="#">...</a>
+          </div>
+          <div class="service-item etc">
+            <a href="#">...</a>
           </div>
         </div>
       </div>
@@ -136,7 +149,6 @@ export default class Main {
             <li><a href="#" class="board" data-target="school">학교</a></li>
             <li><a href="#" class="board" data-target="newspaper">신문사</a></li>
             <li><a href="#" class="board" data-target="news">기사</a></li>
-            <li><a href="#" class="board" data-target="...">...</a></li>
           </ul>
         </div>
         <ul class="board-container"></ul>

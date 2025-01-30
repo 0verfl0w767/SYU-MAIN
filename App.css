@@ -97,7 +97,7 @@ header {
 }
 
 .card-3 {
-  height: 380px;
+  height: 510px;
 }
 
 .card-4 {
@@ -309,18 +309,37 @@ footer {
 
 .board-container {
   display: grid;
-  grid-template-columns: repeat(2, 1fr); /* 2개 컬럼 */
+  grid-template-columns: repeat(2, 1fr);
   gap: 20px;
+  list-style-type: none;
 }
 
 .board-item {
+  text-decoration: none;
+  color: inherit;
   display: flex;
   flex-direction: row;
   align-items: center;
   background-color: #fff;
   padding: 15px;
   border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.board-item.school,
+.board-item.news,
+.board-item.newspaper {
+  display: none;
+}
+
+.board-item.show {
+  display: block;
+}
+
+.board-link {
+  display: flex;
+  flex-direction: row;
+  text-decoration: none;
+  color: inherit;
 }
 
 .board-image {
@@ -332,7 +351,9 @@ footer {
 }
 
 .board-content {
-  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .board-content h3 {

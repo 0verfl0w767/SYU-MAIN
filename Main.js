@@ -1,207 +1,274 @@
 export default class Main {
   constructor() {
-    this.element = document.createElement('main');
+    this.element = document.createElement("main");
     this.render();
   }
 
-  render() {
-    const sectionContainer = document.createElement('div');
-    sectionContainer.classList.add('section-container');
-    
-    const section1 = document.createElement('div');
-    section1.classList.add('section-1');
+  async fetchData1() {
+    try {
+      const response = await fetch("https://www.syu.kr/crawl1");
+      const data = await response.json();
+      return data.result.slice(0, 6);
+    } catch (error) {
+      console.error(error);
+      return [];
+    }
+  }
+
+  async fetchData2() {
+    try {
+      const response = await fetch("https://www.syu.kr/crawl2");
+      const data = await response.json();
+      return data.result;
+    } catch (error) {
+      console.error(error);
+      return [];
+    }
+  }
+
+  async renderBoardItems1() {
+    const result = await this.fetchData1();
+    const boardContainer = this.element.querySelector(".board-container");
+
+    result.forEach((item) => {
+      const listItem = document.createElement("li");
+      listItem.classList.add("board-item", "school");
+
+      listItem.innerHTML = `
+        <a href="${item.href}" class="board-link" target="_blank">
+          <img
+            src="//luxblock.co.kr/file_data/luxblook/2020/08/17/4b0708ca352f2f903ed0ef0162bac4f2.png"
+            alt="${item.title}"
+            class="board-image"
+          />
+          <div class="board-content">
+            <h3>${item.title}</h3>
+            <p>${item.category}</p>
+          </div>
+        </a>
+      `;
+
+      boardContainer.appendChild(listItem);
+    });
+  }
+
+  async renderBoardItems2() {
+    const result = await this.fetchData2();
+    const boardContainer = this.element.querySelector(".board-container");
+
+    result.forEach((item) => {
+      const listItem = document.createElement("li");
+      listItem.classList.add("board-item", "newspaper");
+
+      listItem.innerHTML = `
+        <a href="${item.href}" class="board-link" target="_blank">
+          <img
+            src="//luxblock.co.kr/file_data/luxblook/2020/08/17/4b0708ca352f2f903ed0ef0162bac4f2.png"
+            alt="${item.title}"
+            class="board-image"
+          />
+          <div class="board-content">
+            <h3>${item.title}</h3>
+            <p>${item.category}</p>
+          </div>
+        </a>
+      `;
+
+      boardContainer.appendChild(listItem);
+    });
+
+    this.activateTab(".board", "school");
+  }
+
+  async render() {
+    const sectionContainer = document.createElement("div");
+    sectionContainer.classList.add("section-container");
+
+    const section1 = document.createElement("div");
+    section1.classList.add("section-1");
     section1.innerHTML = `
       <div class="card card-1">
-         <h3>...</h3>
+        <h3>...</h3>
       </div>
       <div class="card card-2">
-         <div class="service-tabs">
-            <span class="title">서비스</span>
-            <ul class="links">
-               <li><a href="#" class="service" data-target="subject">과목</a></li>
-               <li><a href="#" class="service" data-target="course">수강</a></li>
-               <li><a href="#" class="service" data-target="shuttle">버스</a></li>
-            </ul>
-         </div>
-         <div class="service-container">
-            <div class="service-item subject">
-               <a href="#">시간표 마법사</a>
-            </div>
-            <div class="service-item subject">
-               <a href="#">교양 과목</a>
-            </div>
-            <div class="service-item subject">
-               <a href="#">일반 과목</a>
-            </div>
-            <div class="service-item course">
-               <a href="#">모의 수강신청</a>
-            </div>
-            <div class="service-item course">
-               <a href="#">경쟁률</a>
-            </div>
-            <div class="service-item course">
-               <a href="#">폐강주의</a>
-            </div>
-            <div class="service-item shuttle">
-               <a href="#">실시간 위치 1</a>
-            </div>
-            <div class="service-item shuttle">
-               <a href="#">실시간 위치 2</a>
-            </div>
-            <div class="service-item shuttle">
-               <a href="#">도착시간</a>
-            </div>
-         </div>
+        <div class="service-tabs">
+          <span class="title">서비스</span>
+          <ul class="links">
+            <li><a href="#" class="service" data-target="subject">과목</a></li>
+            <li><a href="#" class="service" data-target="course">수강</a></li>
+            <li><a href="#" class="service" data-target="shuttle">버스</a></li>
+          </ul>
+        </div>
+        <div class="service-container">
+          <div class="service-item subject">
+            <a href="#">시간표 마법사</a>
+          </div>
+          <div class="service-item subject">
+            <a href="#">교양 과목</a>
+          </div>
+          <div class="service-item subject">
+            <a href="#">일반 과목</a>
+          </div>
+          <div class="service-item course">
+            <a href="#">모의 수강신청</a>
+          </div>
+          <div class="service-item course">
+            <a href="#">경쟁률</a>
+          </div>
+          <div class="service-item course">
+            <a href="#">폐강주의</a>
+          </div>
+          <div class="service-item shuttle">
+            <a href="#">실시간 위치 1</a>
+          </div>
+          <div class="service-item shuttle">
+            <a href="#">실시간 위치 2</a>
+          </div>
+          <div class="service-item shuttle">
+            <a href="#">도착시간</a>
+          </div>
+        </div>
       </div>
       <div class="card card-3">
-         <div class="service-tabs">
-            <span class="title">글</span>
-            <ul class="links">
-               <li><a href="#" class="board" data-target="school">학교</a></li>
-               <li><a href="#" class="board" data-target="news">기사</a></li>
-               <li><a href="#" class="board" data-target="newspaper">신문사</a></li>
-               <li><a href="#" class="board" data-target="...">...</a></li>
-            </ul>
-         </div>
-         <div class="board-container">
-            <div class="board-item">
-               <img src="//luxblock.co.kr/file_data/luxblook/2020/08/17/aacc2aa999a7ad8252af2dff4ac950d2.png" alt="뉴스1" class="board-image">
-               <div class="board-content">
-                  <h3>뉴스 제목 1</h3>
-                  <p>여기 뉴스 내용이 들어갑니다. 테스트 문장입니다.</p>
-               </div>
-            </div>
-            <div class="board-item">
-               <img src="//luxblock.co.kr/file_data/luxblook/2020/08/17/aacc2aa999a7ad8252af2dff4ac950d2.png" alt="뉴스2" class="board-image">
-               <div class="board-content">
-                  <h3>뉴스 제목 2</h3>
-                  <p>여기 뉴스 내용이 들어갑니다. 테스트 문장입니다.</p>
-               </div>
-            </div>
-            <div class="board-item">
-               <img src="//luxblock.co.kr/file_data/luxblook/2020/08/17/aacc2aa999a7ad8252af2dff4ac950d2.png" alt="뉴스3" class="board-image">
-               <div class="board-content">
-                  <h3>뉴스 제목 3</h3>
-                  <p>여기 뉴스 내용이 들어갑니다. 테스트 문장입니다.</p>
-               </div>
-            </div>
-            <div class="board-item">
-               <img src="//luxblock.co.kr/file_data/luxblook/2020/08/17/aacc2aa999a7ad8252af2dff4ac950d2.png" alt="뉴스4" class="board-image">
-               <div class="board-content">
-                  <h3>뉴스 제목 4</h3>
-                  <p>여기 뉴스 내용이 들어갑니다. 테스트 문장입니다.</p>
-               </div>
-            </div>
-         </div>
+        <div class="service-tabs">
+          <span class="title">글</span>
+          <ul class="links">
+            <li><a href="#" class="board" data-target="school">학교</a></li>
+            <li><a href="#" class="board" data-target="newspaper">신문사</a></li>
+            <li><a href="#" class="board" data-target="news">기사</a></li>
+            <li><a href="#" class="board" data-target="...">...</a></li>
+          </ul>
+        </div>
+        <ul class="board-container"></ul>
       </div>
       <div class="card card-4">
-         <h3>공지사항</h3>
-         <div class="notice-table-container">
-            <table class="notice-table">
-               <tr>
-                  <td>공지사항 1</td>
-               </tr>
-               <tr>
-                  <td>공지사항 2</td>
-               </tr>
-               <tr>
-                  <td>공지사항 3</td>
-               </tr>
-               <tr>
-                  <td>공지사항 4</td>
-               </tr>
-               <tr>
-                  <td>공지사항 5</td>
-               </tr>
-               <tr>
-                  <td>공지사항 6</td>
-               </tr>
-               <tr>
-                  <td>공지사항 7</td>
-               </tr>
-            </table>
-         </div>
+        <h3>공지사항</h3>
+        <div class="notice-table-container">
+          <table class="notice-table">
+            <tr>
+              <td>공지사항 1</td>
+            </tr>
+            <tr>
+              <td>공지사항 2</td>
+            </tr>
+            <tr>
+              <td>공지사항 3</td>
+            </tr>
+            <tr>
+              <td>공지사항 4</td>
+            </tr>
+            <tr>
+              <td>공지사항 5</td>
+            </tr>
+            <tr>
+              <td>공지사항 6</td>
+            </tr>
+            <tr>
+              <td>공지사항 7</td>
+            </tr>
+          </table>
+        </div>
       </div>
       <div id="notice" class="modal">
-         <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2 id="modal-title"></h2>
-            <p id="modal-content-text"></p>
-         </div>
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <h2 id="modal-title"></h2>
+          <p id="modal-content-text"></p>
+        </div>
       </div>
     `;
 
-    const section2 = document.createElement('div');
-    section2.classList.add('section-2');
+    const section2 = document.createElement("div");
+    section2.classList.add("section-2");
     section2.innerHTML = `
       <div class="card card-7">
         <a href="#" class="login"><b>SYU KR</b> 로그인</a>
       </div>
       <div class="youtube card-5">
-        <iframe width="100%" height="210" src="https://www.youtube.com/embed/FmBoAx7WzFg" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        <iframe
+          width="100%"
+          height="210"
+          src="https://www.youtube.com/embed/FmBoAx7WzFg"
+          frameborder="0"
+          allow="autoplay; encrypted-media"
+          allowfullscreen
+        ></iframe>
       </div>
       <div class="instagram card-6">
-        <iframe src="https://www.instagram.com/reel/DFUBPsevYFI/embed" width="400" height="780" frameborder="0" scrolling="no" allowtransparency="true"></iframe>
+        <iframe
+          src="https://www.instagram.com/reel/DFUBPsevYFI/embed"
+          width="400"
+          height="780"
+          frameborder="0"
+          scrolling="no"
+          allowtransparency="true"
+        ></iframe>
       </div>
     `;
-    
+
     sectionContainer.appendChild(section1);
     sectionContainer.appendChild(section2);
-    
+
     this.element.appendChild(sectionContainer);
+
+    await Promise.all([this.renderBoardItems1(), this.renderBoardItems2()]);
   }
 
   addTabListener(title) {
     const tabs = document.querySelectorAll(title);
-    tabs.forEach(tab => {
-      tab.addEventListener('click', (event) => {
+    tabs.forEach((tab) => {
+      tab.addEventListener("click", (event) => {
         event.preventDefault();
-        const target = tab.getAttribute('data-target');
+        const target = tab.getAttribute("data-target");
         this.activateTab(title, target);
       });
     });
   }
 
-
   activateTab(title, target) {
     const tabs = document.querySelectorAll(title);
     const gridItems = document.querySelectorAll(`${title}-item`);
 
-    tabs.forEach(tab => {
-      tab.classList.remove('active');
+    tabs.forEach((tab) => {
+      tab.classList.remove("active");
     });
 
-    document.querySelector(`${title}[data-target="${target}"]`).classList.add('active');
+    document
+      .querySelector(`${title}[data-target="${target}"]`)
+      .classList.add("active");
 
-    gridItems.forEach(item => {
-      item.classList.remove('show');
+    gridItems.forEach((item) => {
+      item.classList.remove("show");
     });
 
     const targetItems = document.querySelectorAll(`${title}-item.${target}`);
-    targetItems.forEach(item => item.classList.add('show'));
+    targetItems.forEach((item) => item.classList.add("show"));
   }
-  
+
   addNoticeListener() {
-    const noticeItems = this.element.querySelectorAll('.notice-table td');
-    noticeItems.forEach(item => {
-      item.addEventListener('click', () => {
+    const noticeItems = this.element.querySelectorAll(".notice-table td");
+    noticeItems.forEach((item) => {
+      item.addEventListener("click", () => {
         const title = item.textContent.trim();
         this.openModal(title);
       });
     });
-    
-    this.element.querySelector('.close').addEventListener('click', () => this.closeModal());
-    
+
+    this.element
+      .querySelector(".close")
+      .addEventListener("click", () => this.closeModal());
+
     window.onclick = (event) => {
       if (event.target == document.getElementById("notice")) {
         this.closeModal();
       }
     };
   }
-  
+
   openModal(title) {
     document.getElementById("modal-title").textContent = title;
-    document.getElementById("modal-content-text").textContent = "테스트 문장입니다.";
+    document.getElementById("modal-content-text").textContent =
+      "테스트 문장입니다.";
 
     document.getElementById("notice").style.display = "block";
   }
@@ -212,13 +279,13 @@ export default class Main {
 
   appendTo(parent) {
     parent.appendChild(this.element);
-    
-    this.addTabListener('.service');
-    this.activateTab('.service', 'subject');
-    
-    this.addTabListener('.board');
-    this.activateTab('.board', 'school');
-    
+
+    this.addTabListener(".service");
+    this.activateTab(".service", "subject");
+
+    this.addTabListener(".board");
+    // this.activateTab('.board', 'school');
+
     this.addNoticeListener();
   }
 }

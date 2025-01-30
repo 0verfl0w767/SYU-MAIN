@@ -93,7 +93,7 @@ header {
 }
 
 .card-2 {
-  height: 160px;
+  height: 230px;
 }
 
 .card-3 {
@@ -130,13 +130,23 @@ footer {
   margin-block: 20px;
 }
 
+.notice-section {
+  background-color: #f1f1f1;
+  padding: 10px 20px;
+  margin-bottom: 25px;
+  font-size: 14px;
+  font-weight: normal;
+  border-radius: 5px;
+}
+
 .service-item {
   display: none;
 }
 
 .service-item.subject,
 .service-item.course,
-.service-item.shuttle {
+.service-item.bus,
+.service-item.etc {
   display: none;
 }
 
@@ -343,11 +353,16 @@ footer {
 }
 
 .board-image {
-  width: 100px;
+  width: 130px;
   height: 100px;
   object-fit: cover;
   border-radius: 8px;
   margin-right: 15px;
+  transition: transform 0.5s ease;
+}
+
+.board-image:hover {
+  transform: scale(1.1);
 }
 
 .board-content {
@@ -357,9 +372,9 @@ footer {
 }
 
 .board-content h3 {
-  font-size: 18px;
+  font-size: 17px;
   margin: 0;
-  font-weight: bold;
+  font-weight: normal;
 }
 
 .board-content p {

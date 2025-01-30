@@ -42,14 +42,20 @@ export default class Main {
             class="board-image"
           />
           <div class="board-content">
-            <h3>${item.title}</h3>
-            <p>${item.category}</p>
+            <h3>${item.title.replace(/\d{4}-\d{1,2}학기|\d{4}년 \d{1,2}학기|\d{4}학년도 \d{1,2}학기/g, "").trim()}</h3>
+            <div class="board-detail">
+              <div class="author">${item.author}</div>
+              <!--<div class="category">${item.category}</div>-->
+              <div class="date">${item.date}</div>
+            </div>
           </div>
         </a>
       `;
 
       boardContainer.appendChild(listItem);
     });
+
+    this.activateTab(".board", "school");
   }
 
   async renderBoardItems2() {
@@ -69,15 +75,15 @@ export default class Main {
           />
           <div class="board-content">
             <h3>${item.title}</h3>
-            <p>${item.category}</p>
+            <div class="board-detail">
+              <div class="date">${item.date}</div>
+            </div>
           </div>
         </a>
       `;
 
       boardContainer.appendChild(listItem);
     });
-
-    this.activateTab(".board", "school");
   }
 
   async render() {
@@ -150,6 +156,9 @@ export default class Main {
             <li><a href="#" class="board" data-target="newspaper">신문사</a></li>
             <li><a href="#" class="board" data-target="news">기사</a></li>
           </ul>
+        </div>
+        <div class="notice-section">
+          <p>..</p>
         </div>
         <ul class="board-container"></ul>
       </div>

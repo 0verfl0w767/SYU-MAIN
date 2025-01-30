@@ -97,7 +97,7 @@ header {
 }
 
 .card-3 {
-  height: 510px;
+  height: 570px;
 }
 
 .card-4 {
@@ -375,6 +375,43 @@ footer {
   font-size: 17px;
   margin: 0;
   font-weight: normal;
+}
+
+.board-detail {
+  display: flex;
+  align-items: center;
+  color: gray;
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 1.5;
+}
+
+.author,
+.category,
+.date {
+  flex-shrink: 0;
+}
+
+.author::after {
+  content: "";
+  display: inline-block;
+  background-color: gray;
+  width: 3px;
+  height: 3px;
+  margin: 9px 6px 0;
+  vertical-align: top;
+  border-radius: 50%;
+}
+
+.category::after {
+  content: "";
+  display: inline-block;
+  background-color: gray;
+  width: 3px;
+  height: 3px;
+  margin: 9px 6px 0;
+  vertical-align: top;
+  border-radius: 50%;
 }
 
 .board-content p {

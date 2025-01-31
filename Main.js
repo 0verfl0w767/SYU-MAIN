@@ -161,6 +161,11 @@ export default class Main {
           <p>..</p>
         </div>
         <ul class="board-container"></ul>
+    <div class="pagination-container">
+      <div class="prev-button">이전</div>
+      <div class="number-button-wrapper"><span class="number-button">1</span></div>
+      <div class="next-button">이후</div>
+    </div>
       </div>
       <div class="card card-4">
         <h3>공지사항</h3>

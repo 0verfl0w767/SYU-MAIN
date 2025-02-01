@@ -419,3 +419,8 @@ footer {
   margin-top: 8px;
   color: #555;
 }
+
+.pagination-container {
+  display: flex;
+  justify-content: center;
+}

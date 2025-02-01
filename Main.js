@@ -1,91 +1,11 @@
+import Board from './Board.js';
+
 export default class Main {
   constructor() {
     this.element = document.createElement("main");
     this.render();
   }
-
-  async fetchData1() {
-    try {
-      const response = await fetch("https://www.syu.kr/crawl1");
-      const data = await response.json();
-      return data.result.slice(0, 6);
-    } catch (error) {
-      console.error(error);
-      return [];
-    }
-  }
-
-  async fetchData2() {
-    try {
-      const response = await fetch("https://www.syu.kr/crawl2");
-      const data = await response.json();
-      return data.result.slice(0, 6);
-    } catch (error) {
-      console.error(error);
-      return [];
-    }
-  }
-
-  async renderBoardItems1() {
-    const result = await this.fetchData1();
-    const boardContainer = this.element.querySelector(".board-container");
-
-    result.forEach((item) => {
-      const listItem = document.createElement("li");
-      listItem.classList.add("board-item", "school");
-
-      listItem.innerHTML = `
-        <a href="${item.href}" class="board-link" target="_blank">
-          <img
-            src="https://www.syu.ac.kr/wp-content/uploads/2020/01/%EC%9D%B4%EB%AF%B8%EC%A7%80-%EC%82%BC%EC%9C%A1%EB%8C%80%ED%95%99%EA%B5%90-%EB%A1%9C%EA%B3%A0-1.png"
-            alt="${item.title}"
-            class="board-image"
-          />
-          <div class="board-content">
-            <h3>${item.title.replace(/\d{4}-\d{1,2}학기|\d{4}년 \d{1,2}학기|\d{4}학년도 \d{1,2}학기/g, "").trim()}</h3>
-            <div class="board-detail">
-              <div class="author">${item.author}</div>
-              <!--<div class="category">${item.category}</div>-->
-              <div class="date">${item.date}</div>
-            </div>
-          </div>
-        </a>
-      `;
-
-      boardContainer.appendChild(listItem);
-    });
-
-    this.activateTab(".board", "school");
-  }
-
-  async renderBoardItems2() {
-    const result = await this.fetchData2();
-    const boardContainer = this.element.querySelector(".board-container");
-
-    result.forEach((item) => {
-      const listItem = document.createElement("li");
-      listItem.classList.add("board-item", "newspaper");
-
-      listItem.innerHTML = `
-        <a href="${item.href}" class="board-link" target="_blank">
-          <img
-            src="${item.imgUrl}"
-            alt="${item.title}"
-            class="board-image"
-          />
-          <div class="board-content">
-            <h3>${item.title}</h3>
-            <div class="board-detail">
-              <div class="date">${item.date}</div>
-            </div>
-          </div>
-        </a>
-      `;
-
-      boardContainer.appendChild(listItem);
-    });
-  }
-
+  
   async render() {
     const sectionContainer = document.createElement("div");
     sectionContainer.classList.add("section-container");
@@ -146,25 +66,6 @@ export default class Main {
           <div class="service-item etc">
             <a href="#">...</a>
           </div>
-        </div>
-      </div>
-      <div class="card card-3">
-        <div class="service-tabs">
-          <span class="title">글</span>
-          <ul class="links">
-            <li><a href="#" class="board" data-target="school">학교</a></li>
-            <li><a href="#" class="board" data-target="newspaper">신문사</a></li>
-            <li><a href="#" class="board" data-target="news">기사</a></li>
-          </ul>
-        </div>
-        <div class="notice-section">
-          <p>..</p>
-        </div>
-        <ul class="board-container"></ul>
-        <div class="pagination-container">
-          <div class="prev-button">이전</div>
-          <div class="number-button-wrapper"><span class="number-button">1</span></div>
-        <div class="next-button">이후</div>
         </div>
       </div>
       <div class="card card-4">
@@ -231,13 +132,15 @@ export default class Main {
         ></iframe>
       </div>
     `;
+    
+    const board = new Board();
+    const card4 = section1.querySelector(".card.card-4");
+    card4.parentNode.insertBefore(board.element, card4);
 
     sectionContainer.appendChild(section1);
     sectionContainer.appendChild(section2);
 
     this.element.appendChild(sectionContainer);
-
-    await Promise.all([this.renderBoardItems1(), this.renderBoardItems2()]);
   }
 
   addTabListener(title) {

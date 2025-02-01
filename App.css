@@ -420,12 +420,6 @@ footer {
   color: #555;
 }
 
-* {
-  margin: 0;
-  padding: 10px;
-  box-sizing: border-box;
-}
-
 .pagination-container {
   display: flex;
   justify-content: center;

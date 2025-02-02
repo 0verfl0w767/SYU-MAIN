@@ -97,7 +97,7 @@ header {
 }
 
 .card-3 {
-  height: 570px;
+  height: 600px;
 }
 
 .card-4 {
@@ -322,6 +322,7 @@ footer {
   grid-template-columns: repeat(2, 1fr);
   gap: 20px;
   list-style-type: none;
+  min-height: 430px;
 }
 
 .board-item {
@@ -335,7 +336,7 @@ footer {
   border-radius: 8px;
 }
 
-.board-item.school,
+/* .board-item.school,
 .board-item.news,
 .board-item.newspaper {
   display: none;
@@ -343,7 +344,7 @@ footer {
 
 .board-item.show {
   display: block;
-}
+} */
 
 .board-link {
   display: flex;
@@ -423,4 +424,22 @@ footer {
 .pagination-container {
   display: flex;
   justify-content: center;
+  align-items: center;
+  line-height: 1.5;
+}
+
+.prev-button,
+.next-button {
+  margin-inline: 10px;
+  cursor: pointer;
+}
+
+.number-button {
+  color: gray;
+  cursor: pointer;
+}
+
+.number-button.active {
+  color: black;
+  font-weight: bold;
 }
